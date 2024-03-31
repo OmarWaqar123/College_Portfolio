@@ -20,22 +20,22 @@ app.get("/", async function (req, res) {
   });
 });
 
-// app.get("/about", async function (req, res) {
-//   res.render("about", {
-//     title: "Welcome to my portfolio!",
-//     teamMembers: [
-//       { name: "Syed Zeeshan Ahmed", position: "CEO", image: "zee.png" },
-//       // Add other team members as needed
-//     ],
-//   });
-// });
+app.get("/about", async function (req, res) {
+  res.render("about", {
+    title: "Welcome to my portfolio!",
+    teamMembers: [
+      { name: "Syed Zeeshan Ahmed", position: "CEO", image: "zee.png" },
+      // Add other team members as needed
+    ],
+  });
+});
 
-// app.get("/contact", async function (req, res) {
-//   res.render("contact", {
-//     title: "Welcome to my portfolio!",
-//     // Other data
-//   });
-// });
+app.get("/contact", async function (req, res) {
+  res.render("contact", {
+    title: "Welcome to my portfolio!",
+    // Other data
+  });
+});
 
 // app.get("/submit", async function (req, res) {
 //   const formData = {};
@@ -46,26 +46,26 @@ app.get("/", async function (req, res) {
 //   });
 // });
 
-// app.post("/submit", async function (req, res) {
-//   // Process the form data (e.g., send an email, save to database, etc.)
-//   // For demonstration purposes, we'll just log the data
-//   const body = req.body;
+app.post("/submit", async function (req, res) {
+  // Process the form data (e.g., send an email, save to database, etc.)
+  // For demonstration purposes, we'll just log the data
+  const body = req.body;
 
-//   const validatedData = formValidationSchema.safeParse(body);
-//   if (!validatedData.success) {
-//     res.render("error", {
-//       title: "Error Page",
-//       heading: "Form Validation Failed",
-//       errorMessage: validatedData.error.errors,
-//       suggestion: "Go Back And Try Submitting The Form Again",
-//     });
-//   }
-// Render the submit.ejs view with the form data
-//   res.render("submit", {
-//     title: "Welcome to my portfolio!",
-//     formData: req.body,
-//   });
-// });
+  const validatedData = formValidationSchema.safeParse(body);
+  if (!validatedData.success) {
+    res.render("error", {
+      title: "Error Page",
+      heading: "Form Validation Failed",
+      errorMessage: validatedData.error.errors,
+      suggestion: "Go Back And Try Submitting The Form Again",
+    });
+  }
+  // Render the submit.ejs view with the form data
+  res.render("submit", {
+    title: "Welcome to my portfolio!",
+    formData: req.body,
+  });
+});
 
 // Sample user data (you would use a database in a real application)
 let user = {
@@ -77,18 +77,18 @@ let user = {
 };
 
 // Route to render the projects page
-// app.get("/projects", (req, res) => {
-//   res.render("projects", { title: "Welcome to my portfolio!" });
-// });
+app.get("/projects", (req, res) => {
+  res.render("projects", { title: "Welcome to my portfolio!" });
+});
 
 // Route to render the login page
-// app.get("/login", (req, res) => {
-//   res.render("login", { title: "Welcome to my portfolio!" });
-// });
+app.get("/login", (req, res) => {
+  res.render("login", { title: "Welcome to my portfolio!" });
+});
 
-// app.get("/*", (req, res) => {
-//   res.render("wrongroute", { title: "wrong route" });
-// });
+app.get("/*", (req, res) => {
+  res.render("wrongroute", { title: "wrong route" });
+});
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
