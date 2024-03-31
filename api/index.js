@@ -14,7 +14,7 @@ const PORT = 8080;
 // app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-  req.send("Hello this is working");
+  res.send("Hello this is working");
   // res.render("index", {
   //   title: "Welcome to my portfolio!",
   //   // Other data
