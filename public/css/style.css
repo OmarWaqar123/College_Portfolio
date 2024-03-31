@@ -1,0 +1,118 @@
+body {
+  font-family: "Arial", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+  padding: 20px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  width: auto;
+}
+
+form label {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+form input,
+form button,
+form textarea {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin: 10px 0;
+  width: 300px;
+}
+
+form button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  width: 300px;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ccc;
+  margin-top: auto;
+}
+
+.jumbotron {
+  background-color: #f8f9fa;
+  padding: 100px 0;
+}
+.services {
+  background-color: #f8f9fa;
+  padding: 50px 0;
+}
+.services h2 {
+  margin-bottom: 30px;
+}
+.service {
+  margin-bottom: 30px;
+}
+.success-stories {
+  padding: 50px 0;
+}
+.call-to-action {
+  background-color: #007bff;
+  color: #fff;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.errors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errors ul {
+  font-size: 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
