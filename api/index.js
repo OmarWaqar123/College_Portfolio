@@ -2,6 +2,7 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const { formValidationSchema } = require("../schemas/formvalidation");
 const app = express();
+const multer = require("multer");
 const PORT = process.env.PORT || 8080;
 
 app.use(express.static(__dirname + "/../public"));
