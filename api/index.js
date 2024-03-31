@@ -5,20 +5,20 @@ const { formValidationSchema } = require("../schemas/formvalidation");
 const app = express();
 const PORT = 8080;
 
-// app.use(express.static(__dirname + "../public"));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.set("views", "./views");
-// app.use(expressLayouts);
-// app.set("layout", "../views/layouts/layout");
-// app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/../public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set("views", "./views");
+app.use(expressLayouts);
+app.set("layout", "../views/layouts/layout");
+app.set("view engine", "ejs");
 
 app.get("/", async function (req, res) {
-  res.send("Hello this is working");
-  // res.render("index", {
-  //   title: "Welcome to my portfolio!",
-  //   // Other data
-  // });
+  // res.send("Hello this is working");
+  res.render("index", {
+    title: "Welcome to my portfolio!",
+    // Other data
+  });
 });
 
 // app.get("/about", async function (req, res) {
