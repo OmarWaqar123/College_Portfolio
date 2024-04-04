@@ -3,7 +3,14 @@
     <% if(heading) { %> <%= heading %> <% } else { %> Oops Something Went Wrong
     <% } %>
   </h1>
-  <% if(errorMessage && errorMessage.length > 0) { %>
+
+  <% if(errorMessage && typeof errorMessage === 'string') {%>
+  <div class="errors">
+    <ul>
+      <li><%= errorMessage %></li>
+    </ul>
+  </div>
+  <% } else if(errorMessage && errorMessage.length > 0) { %>
   <div class="errors">
     <ul>
       <% errorMessage.forEach(function(errorMessage) { %>

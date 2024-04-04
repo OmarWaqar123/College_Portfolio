@@ -3,7 +3,8 @@ const expressLayouts = require("express-ejs-layouts");
 const { formValidationSchema } = require("../schemas/formvalidation");
 const app = express();
 const multer = require("multer");
-const PORT = process.env.PORT || 8080;
+const { AddContact, DeleteUser, UpdateUserInfo } = require("./actions");
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + "/../public"));
 app.use(express.json());
@@ -60,12 +61,28 @@ app.post("/submit", async function (req, res) {
       errorMessage: validatedData.error.errors,
       suggestion: "Go Back And Try Submitting The Form Again",
     });
+
+    return;
   }
-  // Render the submit.ejs view with the form data
-  res.render("submit", {
-    title: "Welcome to my portfolio!",
-    formData: req.body,
+  const { name, email, message } = validatedData.data;
+
+  AddContact(name, email, message, (err, row) => {
+    if (err) {
+      res.render("error", {
+        title: "Error Page",
+        heading: "Error Creating Database Entry",
+        errorMessage: err.message,
+        suggestion: "Try To Submit  the form Again",
+      });
+      return;
+    }
+    res.render("submit", {
+      title: "Welcome to my portfolio!",
+      mode: "submitted",
+      formData: row,
+    });
   });
+  // Render the submit.ejs view with the form data
 });
 
 // Sample user data (you would use a database in a real application)
@@ -77,6 +94,87 @@ let user = {
   password: "********",
 };
 
+app.post("/deleteUser", (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    res.render("error", {
+      title: "Error Page",
+      heading: "ID Is Required",
+      errorMessage: "This process failed because the id is not provided",
+      suggestion: "",
+    });
+    return;
+  }
+  DeleteUser(id, (err, changes) => {
+    if (err) {
+      res.render("error", {
+        title: "Error Page",
+        heading: "Could not  delete the entry",
+        errorMessage: err.message,
+        suggestion: "Try to Go back",
+      });
+      return;
+    }
+
+    res.render("deletesuccess", { title: "Delete was Successful" });
+  });
+});
+
+app.post("/updatemessage", (req, res) => {
+  const { id, name, email, message } = req.body;
+
+  if (!id || !name || !email || !message) {
+    res.render("error", {
+      title: "Error Page",
+      heading: "Invalid Data is Provided",
+      errorMessage: "the proper arguements are missing",
+      suggestion: "Make Request from This Website",
+    });
+    return;
+  }
+
+  res.render("updateform", {
+    title: "Update Form Page",
+    id,
+    name,
+    email,
+    message,
+  });
+});
+
+app.post("/updateuserinfo", (req, res) => {
+  const { id, name, email, message } = req.body;
+  if (!id || !name || !email || !message) {
+    res.render("error", {
+      title: "Error Page",
+      heading: "Proper Data is Missing",
+      errorMessage: "the proper arguements are missing",
+      suggestion: "Make Request from This Website",
+    });
+
+    return;
+  }
+
+  UpdateUserInfo(id, name, email, message, (err, row) => {
+    if (err) {
+      res.render("error", {
+        title: "Error Page",
+        heading: "Error Updating Your Message",
+        errorMessage: err.message,
+        suggestion: "Make Request from This Website",
+      });
+
+      return;
+    }
+
+    res.render("submit", {
+      title: "Welcome to my portfolio!",
+      mode: "Updated",
+      formData: row,
+    });
+  });
+});
+
 // Route to render the projects page
 app.get("/projects", (req, res) => {
   res.render("projects", { title: "Welcome to my portfolio!" });
@@ -87,9 +185,10 @@ app.get("/login", (req, res) => {
   res.render("login", { title: "Welcome to my portfolio!" });
 });
 
-app.get("/*", (req, res) => {
+app.use((req, res, next) => {
   res.render("wrongroute", { title: "wrong route" });
 });
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
