@@ -121,17 +121,21 @@ app.post("/deleteUser", (req, res) => {
 });
 
 app.post("/updatemessage", (req, res) => {
-  const { id, name, email, message } = req.body;
+  const { id, ...body } = req.body;
 
-  if (!id || !name || !email || !message) {
+  const validatedData = formValidationSchema.safeParse(body);
+
+  if (!validatedData.success) {
     res.render("error", {
       title: "Error Page",
       heading: "Invalid Data is Provided",
-      errorMessage: "the proper arguements are missing",
+      errorMessage: validatedData.error.errors,
       suggestion: "Make Request from This Website",
     });
     return;
   }
+
+  const { message, name, email } = validatedData.data;
 
   res.render("updateform", {
     title: "Update Form Page",
@@ -143,17 +147,21 @@ app.post("/updatemessage", (req, res) => {
 });
 
 app.post("/updateuserinfo", (req, res) => {
-  const { id, name, email, message } = req.body;
-  if (!id || !name || !email || !message) {
+  const { id, ...body } = req.body;
+
+  const validatedData = formValidationSchema.safeParse(body);
+  if (!validatedData.success) {
     res.render("error", {
       title: "Error Page",
       heading: "Proper Data is Missing",
-      errorMessage: "the proper arguements are missing",
+      errorMessage: validatedData.error.errors,
       suggestion: "Make Request from This Website",
     });
 
     return;
   }
+
+  const { email, message, name } = validatedData.data;
 
   UpdateUserInfo(id, name, email, message, (err, row) => {
     if (err) {
@@ -184,7 +192,14 @@ app.get("/projects", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login", { title: "Welcome to my portfolio!" });
 });
-
+app.get("/checkerror", (req, res) => {
+  res.render("error", {
+    title: "Error Page",
+    heading: "Error Creating Database Entry",
+    errorMessage: "Checking error",
+    suggestion: "Try To Submit  the form Again",
+  });
+});
 app.use((req, res, next) => {
   res.render("wrongroute", { title: "wrong route" });
 });
